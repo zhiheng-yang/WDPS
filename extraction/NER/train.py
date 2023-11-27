@@ -94,7 +94,7 @@ def main():
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--num_class", type=int, default=9)
 
-    parser.add_argument("--project_name", type=str, default="NLL-IE-NER")
+    parser.add_argument("--project_name", type=str, default="WDPS-NER")
     parser.add_argument("--n_model", type=int, default=1)
     parser.add_argument("--alpha", type=float, default=50.0)
     parser.add_argument("--alpha_warmup_ratio", default=0.1, type=float)
