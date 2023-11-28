@@ -1,0 +1,5 @@
+ctransformers==0.2.27
+spacy==3.7.2
+torch==2.1.1
+transformers==4.35.0
+transformers==4.35.2
