@@ -167,11 +167,17 @@ class ParallelTransformerBlock(nn.Module):
         out = rearrange(out, "b h n d -> b n (h d)")
         return self.attn_out(out) + self.ff_out(ff)
 
+class MeanLinear(nn.Module):
+    def __init__(self, dim, num_labels = 2):
+        super(MeanLinear, self).__init__()
+        self.ll = nn.Linear(dim, num_labels)
+    def forward(self, x):
+        x = x.mean(dim=1)
+        return self.ll(x)
 
 # transformer
 
-
-def PaLM(*, dim, num_tokens, depth, dim_head=64, heads=8, ff_mult=4):
+def PaLM(dim, num_tokens, depth, num_labels = 2, dim_head=64, heads=8, ff_mult=4):
     net = nn.Sequential(
         nn.Embedding(num_tokens, dim),
         *[
@@ -179,7 +185,7 @@ def PaLM(*, dim, num_tokens, depth, dim_head=64, heads=8, ff_mult=4):
             for _ in range(depth)
         ],
         LayerNorm(dim),
-        nn.Linear(dim, num_tokens, bias=False)
+        MeanLinear(dim, 2)
     )
 
     # they used embedding weight tied projection out to logits, not common, but works
