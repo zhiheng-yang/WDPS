@@ -43,16 +43,14 @@ class AutoClassifierWrapper(nn.Module):
     @eval_decorator
     def generate(
         self,
-        question,
-        passage,
+        context,
         temperature=1.0,
         filter_thres=0.9,
         **kwargs
     ):
-        b_q, t_q, device_q = *question.shape, question.device
-        b_p, t_p, device_p = *passage.shape, passage.device
+        b_q, t_q, device_q = *context.shape, context.device
+        out = t_q
 
-        out = torch.cat((question, passage), 1)
         logits = self.net(out, **kwargs)[:, -1, :]
         filtered_logits = top_k(logits, thres=filter_thres)
         probs = F.softmax(filtered_logits / temperature, dim=-1)
@@ -60,10 +58,6 @@ class AutoClassifierWrapper(nn.Module):
         return sample
 
 
-    def forward(self, question, passage, answer = None, **kwargs):
-        print(question)
-        print(passage)
-        # x_inp = torch.cat((question, passage), 1)
-        x_inp = passage
-        logits = self.net(x_inp, **kwargs)
-        return F.cross_entropy(rearrange(logits, "b c n -> b n c"), answer)
+    def forward(self, x, **kwargs):
+        logits = self.net(x)
+        return logits
