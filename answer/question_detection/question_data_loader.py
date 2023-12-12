@@ -5,7 +5,7 @@ sys.path.append('..')
 from classifier_data import ClassifierData
 from torch.utils.data import Dataset, DataLoader
 
-def boolq_data_loader(file_path, tokenizer, max_len, load_params):
+def question_data_loader(file_path, tokenizer, max_len, load_params):
     df = pd.read_csv(file_path)
     df = df.rename(columns={'question': 'text'})
     df = df[['text', 'label']]
