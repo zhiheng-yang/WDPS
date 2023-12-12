@@ -1,11 +1,10 @@
 import torch
 from torch import cuda
 
-def load_answer(input, output, tokenizer, model, max_seq_len):
-    combined_input = input + output
+def detect_question(input, tokenizer, model, max_seq_len):
     # Encode the combined input
     input_encoding = tokenizer.encode_plus(
-        combined_input,
+        input,
         add_special_tokens=True,
         max_length=max_seq_len,
         padding=True,
@@ -25,9 +24,9 @@ def load_answer(input, output, tokenizer, model, max_seq_len):
         outputs = model(input_ids, attention_mask).squeeze()
         big_val, big_idx = torch.max(outputs, dim=0)
         if big_idx == 1:
-            result = "yes"
+            result = True
         elif big_idx == 0:
-            result = "no"
+            result = False
         else:
             print("Unexpected prediction value")
     return result
