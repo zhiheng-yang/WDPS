@@ -28,7 +28,9 @@ def format_wiki(spans):
         if span.predicted_entity is not None:
             if span.predicted_entity.wikipedia_entity_title is not None:
                 wiki_list.append(span.text+'<TAB>'+return_wikipedia_url(span.predicted_entity.wikipedia_entity_title))
-
+            else:
+                # wiki_list.append(span.text+'<TAB>'+span.__repr__())
+                wiki_list.append(span.text+'<TAB>'+'Entity not linked to a knowledge base')
     return wiki_list
 
 def print_format_wiki(spans):
