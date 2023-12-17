@@ -1,12 +1,8 @@
 from linking.utilities.linking_loader import linking
 
-text = "Yes, Managua is the capital city of Nicaragua. " \
-       "It is located in the southwestern part of the country and " \
-       "is home to many important government buildings and institutes, " \
-       "including the President's Office and the National Assembly. " \
-       "The city has a population of over one million people and is known for its vibrant cultural scene, " \
-       "historic landmarks, and beautiful natural surroundings." \
-        'Jacopo Urbani is a professor in Vrije Universiteit Amsterdam. He won the NIPS 2010 test of time award.'
+text = "In the heart of Paris, the Eiffel Tower stands tall, offering breathtaking views of the cityscape."
 # text = 'Max Welling is a professor in University of Amsterdam. He won the NIPS 2010 test of time award.'
 
 linking = linking(text)
+
+# print(linking)

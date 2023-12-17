@@ -17,7 +17,7 @@ def load_model(model_path, args):
 
 
 def main():
-    model_path = "../../models/ner/ner.pth"
+    model_path = "/Users/young/Library/Mobile Documents/com~apple~CloudDocs/UvA&VU/courses/Web Data Processing Systems/assignment/sota_model/NLL-IE/ner/saved_models/ner_40_epoch.pth"
     args = argparse.Namespace(
         data_dir="../../datasets/CoNLL",
         model_name_or_path="bert-base-cased", # or bert-large-cased
@@ -42,9 +42,11 @@ def main():
     model = load_model(model_path, args)
 
     # ['J', '##acopo', 'University of Amsterdam', 'Vrije Universiteit Amsterdam']
-    input_text = "Jacopo is a person. He is a professor at the University of Amsterdam. " \
-                 "He is also a researcher at the Vrije Universiteit Amsterdam."
-    # input_text = 'Jocapo is a professor in Vrije University Amsterdam.'
+    # input_text = "Jacopo is a person. He is a professor at the University of Amsterdam. " \
+                 # "He is also a researcher at the Vrije Universiteit Amsterdam."
+    input_text = 'England won the FIFA World Cup in 1966.'
+    input_text = 'Max Welling is a football player in University of Amsterdam. He lead the Netherlands won the NIPS 2010 test of time award.'
+    input_text = "Yes, Managua is the capital city of Nicaragua. It is located in the southwestern part of the country and is home to many important government buildings and institutes, including the President's office and the National Assembly. The city has a popula!on of over one million people and is known for its vibrant cultural scene, historic landmarks, and beau!ful natural surroundings."
 
     entities = predict_entities(model, tokenizer, input_text, args)
 
