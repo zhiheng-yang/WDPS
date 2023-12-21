@@ -19,4 +19,4 @@ completion = llm(prompt)
 print("COMPLETION: %s" % completion)
 
 if (detect_question(prompt, tokenizer, question_detection_model, 128)):
-    print(load_answer(prompt, completion, tokenizer, boolq_answer_model, 256))
+    print(load_answer(prompt, completion, tokenizer, boolq_answer_model, 512))
