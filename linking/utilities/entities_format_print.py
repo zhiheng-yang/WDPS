@@ -33,9 +33,33 @@ def format_wiki(spans):
                 wiki_list.append(span.text+'<TAB>'+'Entity not linked to a knowledge base')
     return wiki_list
 
+def fromat_wiki_list(spans):
+    wiki_list = []
+    for span in spans:
+        # print(span)
+        if span.predicted_entity is not None:
+            if span.predicted_entity.wikipedia_entity_title is not None:
+                wiki_list.append([span.text, return_wikipedia_url(span.predicted_entity.wikipedia_entity_title)])
+            else:
+                # wiki_list.append(span.text+'<TAB>'+span.__repr__())
+                wiki_list.append([span.text, 'Entity not linked to a knowledge base'])
+    return wiki_list
+
 def print_format_wiki(spans):
     wiki_list = format_wiki(spans)
     for entity in wiki_list:
         print(entity)
 
 
+def goal_finder(input_a: str, output_b: str, entities: list):
+    entities_a = [entity for entity in entities if (entity[0] in input_a)]
+    entities_b = [entity for entity in entities if entity not in entities_a]
+    goal = entities_b[0]
+    return goal, entities
+
+def print_answer_entity(entity):
+    print("A\""+entity[0]+'\"<TAB>\"'+entity[1]+"\"")
+
+def print_all_entity(entities):
+    for entity in entities:
+        print("E\""+entity[0]+'\"<TAB>\"'+entity[1]+"\"")
