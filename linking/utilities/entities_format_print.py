@@ -1,4 +1,5 @@
 import re
+from linking.data_types.base_types import Entity, Span
 
 def print_entities(spans):
     entities_with_links = [span.text+'<TAB>'+span.predicted_entity.wikidata_entity_id for span in spans if span.predicted_entity.wikidata_entity_id is not None]
@@ -33,16 +34,34 @@ def format_wiki(spans):
                 wiki_list.append(span.text+'<TAB>'+'Entity not linked to a knowledge base')
     return wiki_list
 
+def deduplicate_spans(span_list: list[Span]) -> list[Span]:
+    seen_links = set()
+    unique_spans = []
+
+    for span in span_list:
+        link = span.text
+
+        if link not in seen_links:
+            seen_links.add(link)
+            unique_spans.append(span)
+
+    return unique_spans
+
+# also for duplicate spans
 def fromat_wiki_list(spans):
+    # deduplicated_spans = deduplicate_spans(spans)
     wiki_list = []
     for span in spans:
         # print(span)
         if span.predicted_entity is not None:
             if span.predicted_entity.wikipedia_entity_title is not None:
-                wiki_list.append([span.text, return_wikipedia_url(span.predicted_entity.wikipedia_entity_title)])
+                if not (span.text in [entity[0] for entity in wiki_list] \
+                        and return_wikipedia_url(span.predicted_entity.wikipedia_entity_title) in [entity[1] for entity in wiki_list]):
+                    wiki_list.append([span.text, return_wikipedia_url(span.predicted_entity.wikipedia_entity_title)])
             else:
-                # wiki_list.append(span.text+'<TAB>'+span.__repr__())
-                wiki_list.append([span.text, 'Entity not linked to a knowledge base'])
+                if span.text not in [entity[0] for entity in wiki_list]:
+                    # wiki_list.append(span.text+'<TAB>'+span.__repr__())
+                    wiki_list.append([span.text, 'Entity not linked to a knowledge base'])
     return wiki_list
 
 def print_format_wiki(spans):
