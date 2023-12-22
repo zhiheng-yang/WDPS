@@ -12,7 +12,7 @@ from transformers import logging
 from answer.fact_checking.fact_checking import fact_checking
 logging.set_verbosity_error()
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-boolq_answer_model = torch.load('models/palm_boolq.bin', map_location=torch.device(device))
+boolq_answer_model = torch.load('/app/models/palm_boolq.bin', map_location=torch.device(device))
 
 repository="TheBloke/Llama-2-7B-GGUF"
 model_file="llama-2-7b.Q4_K_M.gguf"
