@@ -1,13 +1,17 @@
 import torch
 from torch import cuda
+from transformers import RobertaTokenizer
 
-def load_answer(input, output, tokenizer, model, max_seq_len):
+MAX_LEN = 256
+tokenizer = RobertaTokenizer.from_pretrained('roberta-base', truncation=True, do_lower_case=True)
+
+def load_answer(input, output, model):
     combined_input = input + output
     # Encode the combined input
     input_encoding = tokenizer.encode_plus(
         combined_input,
         add_special_tokens=True,
-        max_length=max_seq_len,
+        max_length=256,
         padding=True,
         truncation=True,
         return_tensors='pt',  # This returns PyTorch tensors
@@ -25,9 +29,9 @@ def load_answer(input, output, tokenizer, model, max_seq_len):
         outputs = model(input_ids, attention_mask).squeeze()
         big_val, big_idx = torch.max(outputs, dim=0)
         if big_idx == 1:
-            result = "yes"
+            result = "A\"yes\""
         elif big_idx == 0:
-            result = "no"
+            result = "A\"no\""
         else:
             print("Unexpected prediction value")
     return result
