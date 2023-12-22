@@ -33,7 +33,7 @@ def process_line(line_counter, line):
 
     else:
         goal_entity = goal_finder(line, completion, all_entities)
-        print(f"Question-{line_counter:03}\t{goal_entity}")
+        print(f"Question-{line_counter:03}\tE\"{goal_entity[0]}\"<TAB>\"{goal_entity[1]}\"")
     for entity in all_entities:
         print(f"Question-{line_counter:03}\tE\"{entity[0]}\"<TAB>\"{entity[1]}\"")
     fact = fact_checking(line, completion)
