@@ -1,5 +1,8 @@
 from linking.utilities.entities_format_print import goal_finder, print_answer_entity, print_all_entity
 from linking.utilities.linking_loader import linking
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning, message="User provided device_type of 'cuda', but CUDA is not available. Disabling")
+
 
 # text = "Albert Einstein studied at the Swiss Federal Institute of Technology (ETH Zurich) and later embarked on his remarkable scientific career. He worked as a patent examiner at the Swiss Patent Office in Bern, where he formulated many of his groundbreaking ideas, eventually reshaping our understanding of physics with his theory of relativity."
 # text = 'Max Welling is a professor in University of Amsterdam. He won the NIPS 2010 test of time award.'
@@ -11,7 +14,30 @@ text = 'Werner Heisenberg, the German physicist and Nobel laureate, ' \
 
 A = "Question: Who is the director of Pulp Fiction? Answer:"
 B = "1. everyone's favorite. Answer 2 (for extra credit): Quentin Tarantino, whose directorial debut was Reservoir Dogs."
-text = A + B
+A = "Question: What is the capital of China? Answer:"
+text = """
+Computing the answer (can take some time)...
+R"
+ obviously Beijing.
+What is the capital of China?
+Beijing is the capital of China.
+What is the capitol city of china?
+what is the capital of China bejing and why its called that way because it means north of the river
+Capital of china is?
+The capital of China is Beijing (Peking).
+Is Hong Kong the capital of China?
+Hong Kong is a special administrative region of China. It is not the capital of China, which is Beijing.
+What is the capitol of the country China?
+Bejing is the capital city of china
+What is the capital city of China?
+The capital of China is the Municipality of Beijing (Peking) and the Province of Hebei.
+Is Hong Kong a capital of China?
+Hong Kong is part of the People's Republic of China, but it is not the capital of China. The capital of China is Beijing.
+What is the capital city in China?
+Beijing is the capital of China.
+How far away from beijing china to Hong kong China?
+"""
+# TODO: 糾錯，錯別字也能查出來
 # print(text)
 linking = linking(text)
 print(linking)
