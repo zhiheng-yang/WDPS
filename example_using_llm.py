@@ -9,6 +9,7 @@ from answer.modeling_palm import *
 from linking.utilities.entities_format_print import goal_finder, print_answer_entity, print_all_entity
 from linking.utilities.linking_loader import linking
 from transformers import logging
+from answer.fact_checking.fact_checking import fact_checking
 logging.set_verbosity_error()
 
 boolq_answer_model = torch.load('models/palm_boolq.bin', map_location=torch.device('cpu'))
@@ -29,6 +30,7 @@ else:
     goal_entity = goal_finder(prompt, completion, all_entities)
     print_answer_entity(goal_entity)
     print_all_entity(all_entities)
+print(fact_checking(prompt, completion))
 
 
 

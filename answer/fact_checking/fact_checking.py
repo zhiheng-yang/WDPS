@@ -1,11 +1,11 @@
 from transformers import RobertaTokenizer, RobertaForSequenceClassification
 import torch
+tokenizer = RobertaTokenizer.from_pretrained('Dzeniks/roberta-fact-check')
+model = RobertaForSequenceClassification.from_pretrained('Dzeniks/roberta-fact-check')
+label_to_message = {0: "C\"correct\"", 1: "C\"incorrect\""}
 
 # 0 for supports and 1 for refutes
 def fact_checking(_claim, _evidence):
-
-    tokenizer = RobertaTokenizer.from_pretrained('Dzeniks/roberta-fact-check')
-    model = RobertaForSequenceClassification.from_pretrained('Dzeniks/roberta-fact-check')
 
     x = tokenizer.encode_plus(_claim, _evidence, return_tensors="pt")
 
@@ -14,4 +14,4 @@ def fact_checking(_claim, _evidence):
         prediction = model(**x)
 
     label = torch.argmax(prediction[0]).item()
-    return label
+    return label_to_message[label]

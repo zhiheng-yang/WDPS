@@ -454,7 +454,7 @@ class Refined(object):
             cls,
             model_name: str,
             entity_set: str,
-            data_dir: Optional[str] = '/app/resources/refined',
+            data_dir: Optional[str] = None,
             debug: bool = False,
             device: Optional[str] = None,
             use_precomputed_descriptions: bool = True,
