@@ -74,7 +74,7 @@ def goal_finder(input_a: str, output_b: str, entities: list):
     entities_a = [entity for entity in entities if (entity[0] in input_a)]
     entities_b = [entity for entity in entities if entity not in entities_a]
     goal = entities_b[0]
-    return goal, entities
+    return goal
 
 def print_answer_entity(entity):
     print("A\""+entity[0]+'\"<TAB>\"'+entity[1]+"\"")
