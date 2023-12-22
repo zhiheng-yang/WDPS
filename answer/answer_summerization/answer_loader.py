@@ -1,6 +1,9 @@
 import torch
 from torch import cuda
 from transformers import RobertaTokenizer
+import warnings
+
+warnings.filterwarnings("ignore", category=UserWarning, module="torch.amp.autocast_mode")
 
 MAX_LEN = 256
 tokenizer = RobertaTokenizer.from_pretrained('roberta-base', truncation=True, do_lower_case=True)

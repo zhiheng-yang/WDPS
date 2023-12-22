@@ -4,8 +4,9 @@ from transformers import logging
 logging.set_verbosity_error()
 
 # load model weight model
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=2) 
-model.load_state_dict(torch.load('question_detect/question_classification.pt', map_location=torch.device('cpu')))
+model.load_state_dict(torch.load('question_detect/question_classification.pt', map_location=torch.device(device)))
 
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 
