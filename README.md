@@ -30,39 +30,14 @@ Question-001    C"correct"
 ```
 You can modify input.txt to add more questions.
 
-#
-Dataset preparation
-
-## Download the dataset
-
-### CoNLL-2003
-
-```shell
-
+# Docker image
 ```
-
-### TACRED
-
-### TACREV
-
-#### Dev Split
-
-```bash
-python scripts/apply_tacred_patch.py \
-  --dataset-file <TACRED DIR>/dev.json \
-  --patch-file ./patch/dev_patch.json \
-  --output-file ./dataset/dev_rev.json
+You can pull down our docker image using:
 ```
-#### Test Split
-
-```bash
-python scripts/apply_tacred_patch.py \
-  --dataset-file <TACRED DIR>/test.json \
-  --patch-file ./patch/test_patch.json \
-  --output-file ./dataset/test_rev.json
+docker pull ottokafka2/wdps_group_assgn
 ```
-
-### BoolQ
-
-
-### 
+Then you can run our docker image in a new container.
+```
+docker run -ti ottokafka2/wdps_group_assgn
+```
+The python file file_input.py is under directory /app.
