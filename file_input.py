@@ -12,6 +12,10 @@ from linking.utilities.linking_loader import linking
 from transformers import logging
 from answer.fact_checking.fact_checking import fact_checking
 logging.set_verbosity_error()
+import logging as syslogger
+syslogger.basicConfig(level=syslogger.ERROR)
+import warnings
+warnings.filterwarnings("ignore")
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 boolq_answer_model = torch.load('/app/models/palm_boolq.bin', map_location=torch.device(device))
 
