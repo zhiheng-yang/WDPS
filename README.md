@@ -31,7 +31,7 @@ Question-001    C"correct"
 You can modify input.txt to add more questions.
 
 # Docker image
-```
+
 You can pull down our docker image using:
 ```
 docker pull ottokafka2/wdps_group_assgn
