@@ -11,11 +11,13 @@ from linking.utilities.entities_format_print import goal_finder, print_answer_en
 from linking.utilities.linking_loader import linking
 from transformers import logging
 from answer.fact_checking.fact_checking import fact_checking
-import concurrent.futures
 logging.set_verbosity_error()
-
+import logging as syslogger
+syslogger.basicConfig(level=syslogger.ERROR)
+import warnings
+warnings.filterwarnings("ignore")
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-boolq_answer_model = torch.load('models/palm_boolq.bin', map_location=torch.device(device))
+boolq_answer_model = torch.load('/app/models/palm_boolq.bin', map_location=torch.device(device))
 
 repository="TheBloke/Llama-2-7B-GGUF"
 model_file="llama-2-7b.Q4_K_M.gguf"
@@ -32,13 +34,12 @@ def process_line(line_counter, line):
     if (detect_question(line)):
         yes_no = load_answer(line, completion, boolq_answer_model)
         print(f"Question-{line_counter:03}\t{yes_no}")
-        for entity in all_entities:
-            print(f"Question-{line_counter:03}\tE\"{entity[0]}\"<TAB>\"{entity[1]}\"")
+
     else:
         goal_entity = goal_finder(line, completion, all_entities)
-        print(f"Question-{line_counter:03}\t{goal_entity}")
-        for entity in all_entities:
-            print(f"Question-{line_counter:03}\t{entity}")
+        print(f"Question-{line_counter:03}\tA\"{goal_entity[0]}\"<TAB>\"{goal_entity[1]}\"")
+    for entity in all_entities:
+        print(f"Question-{line_counter:03}\tE\"{entity[0]}\"<TAB>\"{entity[1]}\"")
     fact = fact_checking(line, completion)
     print(f"Question-{line_counter:03}\t{fact}")
 
